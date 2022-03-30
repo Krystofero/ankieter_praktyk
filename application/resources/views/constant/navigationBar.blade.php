@@ -12,6 +12,10 @@
         <li class="nav-item">
             <a class="nav-link" href="{{url('/ankiety')}}">Moje ankiety</a>
         </li>
+        {{-- @if($user->user_level == "2") --}}
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('/moderator/zarzadzajankiety')}}">Zarządzaj ankietami</a>
+        </li>
         {{-- @if($user->user_level == "1") --}}
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
@@ -21,10 +25,6 @@
                 <a class="dropdown-item nav-link navbar-collapse" href="{{url('/admin/zarzadzajankiety')}}">Zarządzaj ankietami</a>
                 <a class="dropdown-item nav-link navbar-collapse" href="{{url('/admin/users')}}">Zarządzaj użytkownikami</a>
             </div>
-        </li>
-        {{-- @if($user->user_level == "2") --}}
-        <li class="nav-item">
-            <a class="nav-link" href="{{url('/moderator/zarzadzajankiety')}}">Zarządzaj ankietami</a>
         </li>
     </ul>
     </div>

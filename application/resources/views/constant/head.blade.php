@@ -1,5 +1,5 @@
 {{-- Sprawdzamy czy przeglądarka to IE --}}
-<script src="{{URL::asset('/js/sprawdzPrzegladarke.js')}}"></script>
+<script src="{{URL::asset('/js/checkBrowser.js')}}"></script>
 
 <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

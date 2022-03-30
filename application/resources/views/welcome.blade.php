@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @include('stale/head')
+    @include('constant/head')
 </head>
 <body>
     <div class="maindiv">
-        @include('stale/navigationBar')
+        @include('constant/navigationBar')
   
 
     
   </div>
-      @include('stale/stopka')
+      @include('constant/footer')
 </body>
 </html>
