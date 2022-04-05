@@ -14,3 +14,5 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .sourceMaps();
+
+mix.browserSync('localhost'); //działa: http://localhost:3000/ankieter_praktyk/ankieter_praktyk/application/public/

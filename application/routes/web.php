@@ -21,6 +21,6 @@ Route::get('/', function () {
 //     return view('TEST');
 // });
 
-Auth::routes();
+Auth::routes();  // Klasa Auth ma ukryty routing i endpointy które kierują do kontrolerów (wszystkie routes)
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
