@@ -1,6 +1,11 @@
 window._ = require('lodash');
 
 try {
+    window.$.ajaxSetup({//konfiguracja tokenu csrf dla Ajax'a
+       headers: {
+           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+       }
+    });
     require('bootstrap');
 } catch (e) {}
 
