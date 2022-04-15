@@ -11303,6 +11303,8 @@ body {
   background-size: cover;
   background-position: bottom center, 50%, 50%;
   min-height: 810px;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar-brand.logo {
@@ -11405,4 +11407,33 @@ body {
 #myTable_filter input {
   background-color: rgba(203, 112, 255, 0.65) !important;
   border: 1px solid black;
+}
+
+#welcome {
+  padding: 250px 0;
+  height: 50%;
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+#welcome h1, #welcome .h1 {
+  text-align: center;
+  color: #202020;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+}
+
+#welcome h1 span, #welcome .h1 span {
+  display: block;
+  margin: 11px 0 17px 0;
+  font-size: 80px;
+  line-height: 80px;
+  color: #e5e5f1;
+  text-shadow: -6px 6px 15px #9d50b1;
+  letter-spacing: -4px;
+}
+
+#welcome h1 span:hover, #welcome .h1 span:hover {
+  text-shadow: 0 10.36px 8.896px #6a6485, 0 -1px 2px #fff;
 }
