@@ -17,10 +17,10 @@ class AddTestUser extends Migration
     {
         DB::table('users')->insert(
             array(
-                'imie' => 'tester',
-                'nazwisko' => 'test',
+                'firstname' => 'tester',
+                'lastname' => 'test',
                 'email' => 'test@gmail.com',
-                'password' => Hash::make('test'),
+                'password' => Hash::make('tester12345'),
                 'remember_token' => 'abcdefg123'
             )
         );

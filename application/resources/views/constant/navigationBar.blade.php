@@ -11,23 +11,29 @@
         <div class="nav-item collapse navbar-collapse menu" id="navbarSupportedContent">
            <!-- Left Side Of Navbar -->
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('/ankiety')}}">Moje ankiety</a>
-                </li>
-                {{-- @if($user->user_level == "2") --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('/moderator/zarzadzajankiety')}}">Zarządzaj ankietami</a>
-                </li>
-                {{-- @if($user->user_level == "1") --}}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                        Panel administratora
-                    </a>
-                    <div class="dropdown-menu bg-dark">
-                        <a class="dropdown-item nav-link navbar-collapse" href="{{url('/admin/zarzadzajankiety')}}">Zarządzaj ankietami</a>
-                        <a class="dropdown-item nav-link navbar-collapse" href="{{url('/admin/users')}}">Zarządzaj użytkownikami</a>
-                    </div>
-                </li>
+                @auth
+                    @can('isStudent')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('/ankiety')}}">Moje ankiety</a>
+                        </li>
+                    @endcan
+                    @can('isModer')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('/moderator/zarzadzajankiety')}}">Zarządzaj ankietami</a>
+                        </li>
+                    @endcan
+                    @can('isAdmin')
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                                Panel administratora
+                            </a>
+                            <div class="dropdown-menu bg-dark">
+                                <a class="dropdown-item nav-link navbar-collapse" href="{{url('/admin/questionaries/zarzadzajankiety')}}">Zarządzaj ankietami</a>
+                                <a class="dropdown-item nav-link navbar-collapse" href="{{ route('users.index') }}">Zarządzaj użytkownikami</a>
+                            </div>
+                        </li>
+                    @endcan
+                @endauth
             </ul>
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">

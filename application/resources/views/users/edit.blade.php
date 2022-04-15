@@ -17,7 +17,7 @@
                             <div class="col-md-8">
                                 <select class="form-select" aria-label=".form-select-lg example" name="user_level" id="user_level">
                                     @foreach ($users_level_list as $key => $val)
-                                        <option value={{$key}} @if (isset($user->user_level) && $user->user_level == $key) selected @endif>{{$val}}</option>
+                                        <option value={{$val}} @if (isset($user->user_level) && $user->user_level == $val) selected @endif>{{$val}}</option>
                                     @endforeach
                                 </select>
                             </div>
