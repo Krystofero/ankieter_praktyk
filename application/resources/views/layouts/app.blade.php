@@ -7,8 +7,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App Title -->
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <!-- CSS JS FILES, FONTS -->
+    <!-- CONSTANT CSS JS FILES, FONTS -->
     @include('constant/head')
+    @include('constant/dataTable')
 </head>
 <body>
     <div id="app" class="maindiv">

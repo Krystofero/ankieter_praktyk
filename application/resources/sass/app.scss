@@ -93,3 +93,34 @@ body{
     color: white;
     align-content: center;
     }
+
+    #titlerow{
+      margin:10px;
+    }
+
+    #myTable thead{
+      // font-size: 18px;
+      color: #fff;
+      background-color: purple;
+    }
+    
+    #myTable tbody{
+      // font-size: 15px;
+      color: black;
+      background-color: #c94c4c;
+    }
+    
+    .paginate_button{
+      background-color:	rgba(203, 112, 255, 0.65) !important;
+      color: black;
+      border: 1px solid black;
+    }
+    #myTable_wrapper{
+      background-color:	rgba(255, 255, 255, 0.65) !important;
+      border: 1px solid black;
+    }
+    
+    #myTable_filter input{
+      background-color:	rgba(203, 112, 255, 0.65) !important;
+      border: 1px solid black;
+    }
