@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('Jesteś zalogowany!') }}
+                    {{ __('Jesteś zalogowany jako ') }} {{ Auth::user()->user_level }}.
                 </div>
             </div>
         </div>
