@@ -29,7 +29,7 @@
                             <label for="lastname" class="col-md-4 col-form-label text-md-end">{{ __('Nazwisko') }}  <i class="fas fa-user"></i></label>
 
                             <div class="col-md-6">
-                                <input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname') }}" required autocomplete="secondname" autofocus>
+                                <input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname') }}" required autocomplete="lastname" autofocus>
 
                                 @error('lastname')
                                     <span class="invalid-feedback" role="alert">
@@ -58,7 +58,6 @@
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -72,6 +71,7 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <small id="passwordHelp" class="form-text text-muted">Hasło powinno zawierać minimum 8 znaków.</small>
                             </div>
                         </div>
 
