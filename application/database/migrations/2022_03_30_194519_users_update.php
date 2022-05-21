@@ -48,17 +48,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->enum('user_level', ['Administrator','Moderator','Student'])->default('Student');
-            // $table->integer('user_level')->default(3);
-            $table->string('firstname');        
-            $table->string('lastname');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('users')) {
+            Schema::create('users', function (Blueprint $table) {
+                $table->id();
+                $table->enum('user_level', ['Administrator','Moderator','Student'])->default('Student');
+                // $table->integer('user_level')->default(3);
+                $table->string('firstname');        
+                $table->string('lastname');
+                $table->string('email')->unique();
+                $table->string('password');
+                $table->rememberToken();
+                $table->timestamps();
+            });
+        }
     }
 
     /**
