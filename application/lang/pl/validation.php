@@ -15,14 +15,14 @@ return [
 
     'accepted'             => 'Pole :attribute musi zostać zaakceptowane.',
     'active_url'           => 'Pole :attribute jest nieprawidłowym adresem URL.',
-    'after'                => 'Pole :attribute musi być datą późniejszą od :date.',
+    'after'                => 'Nieprawidłowa data.', //'Pole :attribute musi być datą późniejszą niż :date.',
     'after_or_equal'       => 'Pole :attribute musi być datą nie wcześniejszą niż :date.',
     'alpha'                => 'Pole :attribute może zawierać jedynie litery.',
     'alpha_dash'           => 'Pole :attribute może zawierać jedynie litery, cyfry i myślniki.',
     'alpha_num'            => 'Pole :attribute może zawierać jedynie litery i cyfry.',
     'array'                => 'Pole :attribute musi być tablicą.',
     'attached'             => 'Ten :attribute jest już dołączony.',
-    'before'               => 'Pole :attribute musi być datą wcześniejszą od :date.',
+    'before'               => 'Nieprawidłowa data.', //'Pole :attribute musi być datą wcześniejszą niż :date.',
     'before_or_equal'      => 'Pole :attribute musi być datą nie późniejszą niż :date.',
     'between'              => [
         'array'   => 'Pole :attribute musi składać się z :min - :max elementów.',
@@ -102,7 +102,7 @@ return [
     'prohibited_unless'    => 'Pole :attribute jest zabronione, chyba że :other jest w :values.',
     'regex'                => 'Format pola :attribute jest nieprawidłowy.',
     'relatable'            => 'Ten :attribute może nie być powiązany z tym zasobem.',
-    'required'             => 'Pole :attribute jest wymagane.',
+    'required'             => 'To pole jest wymagane.',    //'Pole :attribute jest wymagane.'
     'required_if'          => 'Pole :attribute jest wymagane gdy :other ma wartość :value.',
     'required_unless'      => 'Pole :attribute jest wymagane jeżeli :other nie znajduje się w :values.',
     'required_with'        => 'Pole :attribute jest wymagane gdy :values jest obecny.',

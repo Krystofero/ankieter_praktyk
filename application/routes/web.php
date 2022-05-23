@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuestionnaireController;
+use App\Http\Controllers\ModeratorQuestionnaireController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,15 +29,35 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // Route::get('/users/list', [UsersController::class, 'index'])->middleware('auth');  #->middleware('auth')  -wymagane jest wcześniejsze zalogowanie się
 Route::middleware(['auth', 'verified'])->group(function() { #grupa zalogowanych użytkowników
-    Route::middleware(['can:isAdmin'])->group(function() { #grupa Admin
+    Route::middleware(['can:isAdmin'])->group(function() { #grupa Administrator
         Route::resource('users', UsersController::class)->only([
             'index', 'edit', 'update', 'destroy'
         ]);  # ->middleware('auth')  -wymagane jest wcześniejsze zalogowanie się 
 
     });
 
-    // Route::get('/users/list', [UsersController::class, 'index']);
-    // Route::delete('/users/{user}', [UsersController::class, 'destroy']);
+    Route::middleware(['can:isModer'])->group(function() { #grupa Moderator
+
+        Route::get('/questionnairesModerator/create', [ModeratorQuestionnaireController::class, 'create']);
+        Route::get('/questionnairesModerator/{questionnaire}', [ModeratorQuestionnaireController::class, 'show']);
+        Route::get('/questionnairesModerator/stats/{questionnaire}', [ModeratorQuestionnaireController::class, 'stats']);
+        Route::get('/questionnairesModerator/{questionnaire}/questions/create', [QuestionController::class, 'create']);
+        Route::post('/questionnairesModerator/{questionnaire}/questions', [QuestionController::class, 'store']);
+        Route::delete('/questionnairesModerator/{questionnaire}/questions/{question}', [QuestionController::class, 'destroy']);
+        
+        Route::resource('questionnairesModerator', ModeratorQuestionnaireController::class)->only([ //ankiety moderatora
+            'index', 'store', 'edit', 'create', 'update', 'show', 'destroy'
+        ]); 
+        Route::resource('question', QuestionController::class)->only([ //pytania
+            'create'
+        ]); 
+    });
+
+    Route::middleware(['can:isStudent'])->group(function() { #grupa Student
+        Route::resource('questionnaires', QuestionnaireController::class)->only([
+            'index', 'show', 'store', 'update'
+        ]); 
+    });
   
 });
 

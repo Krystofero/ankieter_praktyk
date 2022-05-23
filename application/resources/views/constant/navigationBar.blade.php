@@ -14,12 +14,12 @@
                 @auth
                     @can('isStudent')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url('/ankiety')}}">Moje ankiety</a>
+                            <a class="nav-link" href="{{ route('questionnaires.index') }}">Moje ankiety</a>
                         </li>
                     @endcan
                     @can('isModer')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url('/moderator/zarzadzajankiety')}}">Zarządzaj ankietami</a>
+                            <a class="nav-link" href="{{ route('questionnairesModerator.index') }}">Zarządzaj ankietami</a>
                         </li>
                     @endcan
                     @can('isAdmin')
@@ -28,7 +28,7 @@
                                 Panel administratora
                             </a>
                             <div class="dropdown-menu bg-dark">
-                                <a class="dropdown-item nav-link navbar-collapse" href="{{url('/admin/questionaries/zarzadzajankiety')}}">Zarządzaj ankietami</a>
+                                {{-- <a class="dropdown-item nav-link navbar-collapse" href="{{ route('questionnairesModerator.index') }}">Zarządzaj ankietami</a> --}}
                                 <a class="dropdown-item nav-link navbar-collapse" href="{{ route('users.index') }}">Zarządzaj użytkownikami</a>
                             </div>
                         </li>
