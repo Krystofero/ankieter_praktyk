@@ -49,14 +49,14 @@
                             <button class="btn btn-success btn-sm" title="Edycja ankiety"><i class="far fa-edit"></i></button>
                         </a>
                         {{-- Opcjonalne usuwanie ankiety --}}
-                        {{-- <button class="btn btn-danger btn-sm delete" title="Usunięcie ankiety" data-id="{{ $questionnaire->id }}">
+                        <button class="btn btn-danger btn-sm delete" title="Usunięcie ankiety" data-id="{{ $questionnaire->id }}">
                             <i class="far fa-trash-alt"></i>
-                        </button> --}}
+                        </button>
                     </td>
                 </tr>
             @endforeach
             </tbody>
-            <tfoot style="color: #fff;">
+            {{-- <tfoot style="color: #fff;">
                 <tr>
                   <td>
                     <a href="{{ route('questionnairesModerator.create') }}">
@@ -64,11 +64,18 @@
                     </a>
                   </td>
                 </tr>
-              </tfoot>
+            </tfoot> --}}
         </table>
+        <div class="form-group row mt-2 mb-2 text-center">
+            <div class="col-md-3">
+                <a href="{{ route('questionnairesModerator.create') }}">
+                    <button class="border border-secondary btn btn-primary" style="color: white;"><i class="far fa-edit"></i>Utwórz nową ankietę</button>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 <script type="text/javascript" > const deleteUrl = "{{ url('questionnairesModerator') }}/"; </script>
-{{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="{{asset('/js/questionnairesmanage.js')}}"></script>
 @endsection

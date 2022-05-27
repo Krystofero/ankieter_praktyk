@@ -225,11 +225,6 @@ class ModeratorQuestionnaireController extends Controller
      */
     public function destroy(Questionnaire  $questionnaire)
     {   
-        //Trzeba usunąć jeszcze wszystkie pytania i odpowiedzi powiązane z questionnaire
-        // $questions = $questionnaire->questions()->load();
-        // $answers = $questions->questions()->load();
-
-        dd($questionnaire);
         try {
             $questionnaire->delete();
             return response()->json([
