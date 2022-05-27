@@ -22,6 +22,7 @@ return new class extends Migration
                 $table->date('enddate');
                 // $table->enum('status', ['Nie rozpoczęto','W trakcie','Zakończono'])->default('Nie rozpoczęto');
                 $table->timestamps();
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             });
         }
     }
