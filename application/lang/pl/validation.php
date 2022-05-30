@@ -31,7 +31,7 @@ return [
         'string'  => 'Pole :attribute musi zawierać się w granicach :min - :max znaków.',
     ],
     'boolean'              => 'Pole musi mieć wartość logiczną prawda albo fałsz.',
-    'confirmed'            => 'Potwierdzenie pola :attribute nie zgadza się.',
+    'confirmed'            => 'Potwierdzenie pola nie zgadza się.',
     'date'                 => 'Pole nie jest prawidłową datą.',
     'date_equals'          => 'Pole :attribute musi być datą równą :date.',
     'date_format'          => 'Pole :attribute nie jest w formacie :format.',

@@ -104,7 +104,12 @@
     let ans_number = 1;
     function addNew() {
             var ans = $('#answers');
-            $('#answers').append('<div class="form-group" id="ans'+ ans_number +'"><label for="answer'+ ans_number +'">Odpowiedź nr '+ ans_number +'</label><input name="answers[][answer]" id="answer'+ ans_number +'" class="form-control" type="text" aria-describedby="answer1Help" placeholder="Wprowadź odpowiedź nr '+ ans_number +'" required autocomplete="answer'+ ans_number +'" autofocus><small id="answer'+ ans_number +'Help" class="form-text text-muted">Data określająca początek możliwości wypełniania ankiety.</small>@error("answers.'+ (ans_number-1) +'.answer")<small class="form-text text-danger">{{$message}}</small>@enderror    <button onclick="deleteAnswer(ans'+ ans_number +')" id="del'+ ans_number +'" class="mt-1 btn btn-sm btn-outline-danger delete" title="Usunięcie odpowiedzi">Usuń odpowiedź</button></div>');
+            $('#answers').append('<div class="form-group" id="ans'+ ans_number +'"><label for="answer'+ ans_number +'">Odpowiedź nr '+
+                 ans_number +'</label><input name="answers[][answer]" id="answer'+
+                  ans_number +'" class="form-control" type="text" aria-describedby="answer1Help" placeholder="Wprowadź odpowiedź nr '+
+                   ans_number +'" required autocomplete="answer'+ ans_number +'" autofocus> @error("answers.'+
+                     (ans_number-1) +'.answer")<small class="form-text text-danger">{{$message}}</small>@enderror    <button onclick="deleteAnswer(ans'+
+                      ans_number +')" id="del'+ ans_number +'" class="mt-1 btn btn-sm btn-outline-danger delete" title="Usunięcie odpowiedzi">Usuń odpowiedź</button></div>');
             if(ans_number > 1){
                 $("#del"+(ans_number-1)).hide();
                 // $("#del"+(ans_number-1)).remove();
