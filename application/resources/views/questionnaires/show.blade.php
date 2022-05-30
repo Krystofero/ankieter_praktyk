@@ -8,11 +8,7 @@
                 <div class="card-header h3 text-center">{{ __('Edycja pytań ankiety:') }} {{ $questionnaire->title }}</div>
                 <div class="card-body">
                     
-                    <div class="form-group row mb-0 text-center">
-                        <div class="col-md-3">
-                            <a class="btn btn-primary" href="{{url()->current()}}/questions/create">Dodaj nowe pytanie</a>
-                        </div>
-                    </div>
+                    
 
                     @foreach($questionnaire->questions as $question)
 
@@ -21,9 +17,13 @@
 
                         <div class="card-body">
                             <ul class="list-group">
-                                @foreach($question->answers as $answer)
-                                    <li class="list-group-item">{{ $answer->answer }}</li>
-                                @endforeach
+                                @if($question->type == "Otwarte")
+                                <li class="list-group-item text-center">(Pytanie otwarte)</li>
+                                @else
+                                    @foreach($question->answers as $answer)
+                                        <li class="list-group-item">{{ $answer->answer }}</li>
+                                    @endforeach
+                                @endif
                               </ul>
                         </div>
 
@@ -44,11 +44,14 @@
 
                     @endforeach
 
-                    <div class="form-group row mt-2 mb-0">
-                        <div class="col-md-2">
+                    <div class="form-group row mb-0 text-center">
+                        <div class="col-md-6">
                             <a href="{{ route('questionnairesModerator.index') }}" class="btn btn-danger">
                                 <i class="fas fa-arrow-left"></i>{{ __(' Powrót') }}
                             </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a class="btn btn-primary" href="{{url()->current()}}/questions/create">Dodaj nowe pytanie</a>
                         </div>
                     </div>
                 </div>

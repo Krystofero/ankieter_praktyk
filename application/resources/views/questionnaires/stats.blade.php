@@ -18,9 +18,22 @@
                             <div class="card-header h5">{{ $question->question }}</div>
                             <div class="card-body">
                                 <ul class="list-group">
-                                    @foreach($question->answers as $answer)
-                                        <li class="list-group-item">{{ $answer->answer }}</li>
-                                    @endforeach
+                                    @if($question->type == "Otwarte")
+                                        @foreach($question->responses as $response)
+                                            @if($response->answer_text != null)
+                                                <li class="list-group-item">{{ $response->answer_text }}</li>
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        @foreach($question->answers as $answer)
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <div>{{ $answer->answer }}</div>
+                                                @if($question->responses->count())
+                                                    <div>{{ intval(($answer->responses->count() * 100) / $question->responses->count()) }}%</div>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    @endif
                                   </ul>
                             </div>
                         </div>

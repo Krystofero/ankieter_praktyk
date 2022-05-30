@@ -19,7 +19,9 @@ class Question extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'question'
+        'question',
+        'type',
+        'questionnaire_id'
     ];
 
     public function questionnaire(Questionnaire  $questionnaire)
@@ -31,6 +33,11 @@ class Question extends Model
     {
         // return $this->hasMany(Answer::class);
         return $this->hasMany(Answer::class, 'question_id');
+    }
+
+    public function responses()
+    {
+        return $this->hasMany(Response::class, 'question_id');
     }
 
 }

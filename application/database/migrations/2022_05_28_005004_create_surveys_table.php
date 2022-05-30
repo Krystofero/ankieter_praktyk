@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('surveys', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('questionnaire_id');
-            $table->string('question');
-            $table->enum('type', ['Zamkniete','Otwarte'])->default('Zamkniete');
+            $table->unsignedBigInteger('user_id');
+            $table->boolean('filled')->default(false);
             $table->timestamps();
             $table->foreign('questionnaire_id')->references('id')->on('questionnaires')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('surveys');
     }
 };

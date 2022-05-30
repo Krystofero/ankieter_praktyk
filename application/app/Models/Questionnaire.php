@@ -21,6 +21,7 @@ class Questionnaire extends Model
      */
     protected $fillable = [
         // 'questionnaire',
+        'id',
         'title',
         'user_id',
         'startdate',
@@ -37,5 +38,10 @@ class Questionnaire extends Model
     {
         // return $this->hasMany(Question::class);
         return $this->hasMany(Question::class, 'questionnaire_id');
+    }
+
+    public function surveys()
+    {
+        return $this->hasMany(Survey::class, 'questionnaire_id');
     }
 }

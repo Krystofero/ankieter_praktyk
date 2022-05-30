@@ -23,10 +23,6 @@ Route::get('/', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::get('/test', function () {
-//     return view('TEST');
-// });
-
 // Route::get('/users/list', [UsersController::class, 'index'])->middleware('auth');  #->middleware('auth')  -wymagane jest wcześniejsze zalogowanie się
 Route::middleware(['auth', 'verified'])->group(function() { #grupa zalogowanych użytkowników
     Route::middleware(['can:isAdmin'])->group(function() { #grupa Administrator
@@ -55,8 +51,11 @@ Route::middleware(['auth', 'verified'])->group(function() { #grupa zalogowanych 
     });
 
     Route::middleware(['can:isStudent'])->group(function() { #grupa Student
+        Route::get('/questionnaires/{questionnaire}', [QuestionnaireController::class, 'show']);
+        Route::post('/surveys/{questionnaire}', [QuestionnaireController::class, 'store']);
+
         Route::resource('questionnaires', QuestionnaireController::class)->only([
-            'index', 'show', 'store', 'update'
+            'index', 'show', 'store'
         ]); 
     });
   

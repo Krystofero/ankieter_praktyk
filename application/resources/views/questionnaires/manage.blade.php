@@ -32,8 +32,7 @@
                     @else
                         <td>W trakcie</td>
                     @endif
-                    {{-- <td>{{ $questionnaire->status1 }}</td> --}}
-                    <td>
+                    <td class="text-center">
                         @if(!($questionnaire->startdate > now()))
                             {{-- wzorować się na edit --}}
                             <a href="{{url('/questionnairesModerator/stats/')}}/{{$questionnaire->id}}">
@@ -48,7 +47,6 @@
                         <a href="{{ route('questionnairesModerator.edit', $questionnaire->id) }}">
                             <button class="btn btn-success btn-sm" title="Edycja ankiety"><i class="far fa-edit"></i></button>
                         </a>
-                        {{-- Opcjonalne usuwanie ankiety --}}
                         <button class="btn btn-danger btn-sm delete" title="Usunięcie ankiety" data-id="{{ $questionnaire->id }}">
                             <i class="far fa-trash-alt"></i>
                         </button>

@@ -13,6 +13,7 @@ $(document).ready(function () {
             { "sType": "polish-string" },
             { "sType": "polish-string" },
             { "sType": "polish-string" },
+            { "sType": "polish-string" },
             null
         ],
         "language": {

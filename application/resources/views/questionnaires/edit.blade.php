@@ -23,6 +23,15 @@
                             @enderror    
                         </div>
                         <div class="form-group">
+                            <label for="description">Opis</label>
+                            <textarea name="description" id="description" class="form-control" type="text" aria-describedby="titleHelp" placeholder="Wprowadź opis" autocomplete="description" autofocus>{{$questionnaire->description}}</textarea>
+                            <small id="descriptionHelp" class="form-text text-muted">Krótki opis widoczny przez respondentów.</small>
+
+                            @error('description')
+                                <small class="form-text text-danger">{{$message}}</small>
+                            @enderror    
+                        </div>
+                        <div class="form-group">
                             <label for="startdate">Data początkowa</label>
                             <input name="startdate" id="startdate" class="form-control" value="{{$questionnaire->startdate}}" type="date" aria-describedby="startdateHelp" placeholder="Wprowadź datę początkową" value="{{ $questionnaire->startdate }}" required autocomplete="startdate" autofocus>
                             <small id="startdateHelp" class="form-text text-muted">Data określająca początek możliwości wypełniania ankiety.</small>
@@ -41,20 +50,31 @@
                             @enderror  
                         </div>
 
-                        {{-- <div class="form-group">
+                        <div class="form-group">
                             <label for="pinusers">Podpięci użytkownicy</label>
-                        </div> --}}
+                            <div class="col-md-12">
+                                <select class="form-select" aria-label=".form-select-lg example" name="pinstudents[]" id="pinstudents" multiple required autocomplete="pinstudents" autofocus>
+                                    @foreach ($students as $key => $val)
+                                        <option value={{$val->id}}
+                                            @foreach ($pinedstudents as $key2 => $val2)
+                                             @if ($val2->user_id == $val->id) selected disabled @endif 
+                                            @endforeach>{{$val->firstname}} {{$val->lastname}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <small id="pinstudentsHelp" class="form-text text-muted">Edycja podpiętych użytkowników, do których jest skierowana ankieta nie jest możliwa w trakcie jej trwania.</small>
+                        </div>
 
                         <div class="form-group row mb-0 text-center">
-                            <div class="col-md-6">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Zapisz') }}
-                                </button>
-                            </div>
                             <div class="col-md-6">
                                 <a href="{{ route('questionnairesModerator.index') }}" class="btn btn-danger">
                                     {{ __('Anuluj') }}
                                 </a>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Zapisz') }}
+                                </button>
                             </div>
                         </div>
                     </form>

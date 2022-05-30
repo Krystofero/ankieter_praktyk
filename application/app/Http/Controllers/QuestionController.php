@@ -34,12 +34,23 @@ class QuestionController extends Controller
     public function store(Request $request, Questionnaire  $questionnaire)
     {
         $data = request()->validate([
+            'type' => 'nullable',
             'question.question' => 'required|String|max:255',
-            'answers.*.answer' => 'required|String|max:255'
+            'answers.*.answer' => 'nullable|String|max:255'
         ]);
+        if($data['type'] == "Zamkniete"){
+            $question = $questionnaire->questions()->create($data['question']);
+            $question->answers()->createMany($data['answers']);
+        }
+        else{//Pytanie otwarte
+            $question = Question::create([
+                'questionnaire_id' => $questionnaire->id,
+                'question' => $data['question']['question'],
+                'type' => "Otwarte"
+            ]);
 
-        $question = $questionnaire->questions()->create($data['question']);
-        $question->answers()->createMany($data['answers']);
+            // $question = $questionnaire->questions()->create($data['question']);
+        }
 
         return redirect(route('questionnairesModerator.show',  $questionnaire->id)); //przekierowanie spowrotem do widoku edycji pytań
     }

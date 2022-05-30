@@ -18,6 +18,7 @@ return new class extends Migration
                 $table->id();
                 $table->unsignedBigInteger('user_id');
                 $table->string('title');
+                $table->string('description')->nullable();
                 $table->date('startdate');
                 $table->date('enddate');
                 // $table->enum('status', ['Nie rozpoczęto','W trakcie','Zakończono'])->default('Nie rozpoczęto');

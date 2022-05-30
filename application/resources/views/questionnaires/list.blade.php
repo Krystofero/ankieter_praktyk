@@ -20,20 +20,39 @@
             </tr>
             </thead>
             <tbody class="text-dark">
-            {{-- @foreach($questionnaires as questionnaire)
+            @foreach($questionnaires as $questionnaire)
                 <tr>
-                    <th scope="row">{{ questionnaire->title }}</th>
-                    <td>{{ questionnaire->startdate }}  Tego jeszcze nie ma w bazie</td>
-                    <td>{{ questionnaire->enddate }} Tego jeszcze nie ma w bazie</td>
-                    <td>{{ questionnaire->status1 }} Tego jeszcze nie ma w bazie</td>
-                    <td>{{ questionnaire->status2 }} Tego jeszcze nie ma w bazie</td>
-                    <td>
-                        <a href="{{ route('questionnaires.fill', questionnaire->id) }}">
-                            <button class="btn btn-success btn-sm" title="Wypełnianie ankiety"><i class="far fa-edit"></i></button>
-                        </a>
+                    <th scope="row">{{ $questionnaire->title }}</th>
+                    <td>{{ $questionnaire->startdate }}</td>
+                    <td>{{ $questionnaire->enddate }}</td>
+
+                    {{-- Status ankiety: --}}
+                    @if($questionnaire->startdate > now()) 
+                        <td>Nie rozpoczęto</td>
+                    @elseif ($questionnaire->enddate < now())
+                        <td>Zakończono</td>
+                    @else
+                        <td>W trakcie</td>
+                    @endif
+
+                    {{-- Status wypełnienia ankiety: --}}
+                    @if($questionnaire->filled == false) 
+                        <td>Nie wypełniono</td>
+                    @else
+                        <td>Wypełniono</td>
+                    @endif
+
+                    <td class="text-center">
+                        @if($questionnaire->filled == false) 
+                            <a href="{{ route('questionnaires.show', $questionnaire->questionnaire_id) }}">
+                                <button class="btn btn-success btn-sm" title="Wypełnij ankietę"><i class="far fa-edit"></i></button>
+                            </a>
+                        @else
+                            --Brak dostępnych akcji--
+                        @endif
                     </td>
                 </tr>
-            @endforeach --}}
+            @endforeach
             </tbody>
         </table>
     </div>

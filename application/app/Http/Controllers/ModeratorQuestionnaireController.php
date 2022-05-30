@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Survey;
 use App\Models\Questionnaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,25 +46,11 @@ class ModeratorQuestionnaireController extends Controller
      */
     public function create()
     {
-        return view('questionnaires.create');
+        $students = DB::table('users')->get()->where('user_level', 'Student');
+        return view('questionnaires.create', [
+            'students' => $students   #lista wszystkich studentów zwracana w blade    
+        ]);
     }
-
-
-    // /**
-    //  * Create a new Questionnaire
-    //  *
-    //  * @param  array  $data
-    //  * @return \App\Models\Questionnaire
-    //  */
-    // protected function store(array $data)
-    // {
-    //     return Questionnaire::create([
-    //         'firstname' => $data['firstname'],
-    //         'lastname' => $data['lastname'],
-    //         'email' => $data['email'],
-    //         'password' => Hash::make($data['password']),
-    //     ]);
-    // }
 
     /**
      * Store in storage and save a newly created questionnaire.
@@ -74,40 +61,28 @@ class ModeratorQuestionnaireController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
-            'title' => 'required|String|max:255',
+            'title' => 'required|String|max:150',
+            'description' => 'nullable|String|max:255',
             'startdate' => 'required|date|before_or_equal:enddate',
-            'enddate' => 'required|date|after_or_equal:startdate',
-            //tutaj jeszcze podpięci użytkownicy itp. pola
+            'enddate' => 'required|date|after_or_equal:startdate'
         ]);
 
         $data['user_id'] = auth()->user()->id;
         $questionnaire = Questionnaire::create($data);
         // $questionnaire = auth()->user()->User::questionnaires()->Questionnaire::create($data);
 
-        // return redirect(route('questionnairesModerator.index')); //przekierowanie do widoku index
+        $data_survey = request()->validate([
+            'pinstudents' => 'required'
+        ]);
+        foreach($data_survey['pinstudents'] as $student){
+            $data2['questionnaire_id'] = $questionnaire->id;
+            $data2['user_id'] = $student;
+            $data2['filled'] = false;
+            $survey = Survey::create($data2);
+        }
+        
         return redirect(route('questionnairesModerator.show', $questionnaire->id)); //przekierowanie do dalszej edycji ankiety i dodawania pytań
-
-        // $data['students_ids']
-        // $data['id_ankiety']
     }
-
-    // /**
-    //  * Show the form with stats or form for edit questions on the specified questionnaire.
-    //  *
-    //  * @param  int $id
-    //  * @return View
-    //  */
-    // public function show(int $id)
-    // {
-    //     $questionnaire = DB::table('questionnaires')->get()->where('id', $id);
-    //     $questionnaire->load('questions');
-
-    //     dd($questionnaire);
-    //     // dd($id);
-    //     return view('questionnaires.show', [
-    //         'questionnaireid' => $id 
-    //     ]);
-    // }
 
     /**
      * Show the form with stats or form for edit questions on the specified questionnaire.
@@ -120,7 +95,7 @@ class ModeratorQuestionnaireController extends Controller
         // $questions = DB::table('questions')->get()->where('questionnaire_id', 16);
         // $answers = DB::table('answers')->get()->where('question_id', $questions->id);
 
-        //// Lazy Eager Loading
+        //// Lazy Eager Loading - ładowanie dynamiczne "z opóźnieniem"
         $questionnaire->load('questions.answers');
 
         return view('questionnaires.show', compact('questionnaire'));
@@ -135,11 +110,13 @@ class ModeratorQuestionnaireController extends Controller
     public function stats(Questionnaire $questionnaire)
     {
         // $questionnaire = DB::table('questionnaires')->get()->where('id', $id)->first(); //znajduje pierwszy element w tabeli o podanym id
-        $questionnaire->load('questions.answers');
-        return view('questionnaires.stats', [  //widok ze statystykami
-            'questionnaire' => $questionnaire 
-        ]);
-        // return view('questionnaires.stats', compact('questionnaire'));
+        // $questionnaire->load('questions.answers');
+        // return view('questionnaires.stats', [  //widok ze statystykami
+        //     'questionnaire' => $questionnaire 
+        // ]);
+
+        $questionnaire->load('questions.answers.responses');
+        return view('questionnaires.stats', compact('questionnaire'));
     }
 
     /**
@@ -151,37 +128,14 @@ class ModeratorQuestionnaireController extends Controller
     public function edit(int $id)
     { 
         $questionnaire = DB::table('questionnaires')->get()->where('id', $id)->first(); //znajduje pierwszy element w tabeli o podanym id
-        // dd($questionnaire[0]);
+        $pinedstudents = DB::table('surveys')->get()->where('questionnaire_id', $id);
+        $students = DB::table('users')->get()->where('user_level', 'Student');        
         return view('questionnaires.edit', [
-                'questionnaire' => $questionnaire 
+                'questionnaire' => $questionnaire,
+                'students' => $students,
+                'pinedstudents' => $pinedstudents
         ]);
     }
-
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  Questionnaire  $questionnaire
-    //  * @return View
-    //  */
-    // public function edit(Questionnaire $questionnaire)
-    // { 
-    //     // dd($questionnaire);
-    //     return view('questionnaires.edit', [
-    //             'questionnaire' => $questionnaire 
-    //     ]);
-    //     // if($stats == 1){
-    //     //     dd("mam statystyki");
-    //     //     return view('questionnaires.stats', [
-    //     //         'questionnaire' => $questionnaire
-    //     //     ]);
-    //     // }else{
-    //     //     dd("NIE mam statystyki");
-    //     //     return view('questionnaires.edit', [
-    //     //         'questionnaire' => $questionnaire 
-    //     //     ]);
-    //     // }
-        
-    // }
 
     /**
      * Update the specified resource in storage.
@@ -191,22 +145,23 @@ class ModeratorQuestionnaireController extends Controller
      * @return RedirectResponse
      */
     public function update(Request $request, int  $id)
-    // public function update(Questionnaire $questionnaire)
     {
         $request->validate([
-            'title' => 'required|String|max:255',
+            'title' => 'required|String|max:150',
+            'description' => 'nullable|String|max:255',
             'startdate' => 'required|date|before_or_equal:enddate',
             'enddate' => 'required|date|after_or_equal:startdate'
         ]);
                 
         $new_title = $request->all()['title'];
+        $new_description = $request->all()['description'];
         $new_startdate = $request->all()['startdate'];
         $new_enddate = $request->all()['enddate'];
 
-        // $updatedquestionnaire = Questionnaire::find($questionnaire->id);
         $updatedquestionnaire = Questionnaire::find($id);
 
         $updatedquestionnaire->title = $new_title;
+        $updatedquestionnaire->description = $new_description;
         $updatedquestionnaire->startdate = $new_startdate;
         $updatedquestionnaire->enddate = $new_enddate;
 
@@ -214,6 +169,21 @@ class ModeratorQuestionnaireController extends Controller
         //     $updatedquestionnaire->$key = $val;
 
         $updatedquestionnaire->save();
+
+        $request2 = request()->validate([
+            'pinstudents' => 'required'
+        ]);
+        $pinedstudents = DB::table('surveys')->get()->where('questionnaire_id', $id);
+        foreach($request2 as $student){
+            foreach($pinedstudents as $student2){
+                if($student2->user_id != $student[0]){
+                    $data2['questionnaire_id'] = $id;
+                    $data2['user_id'] = $student[0];
+                    $data2['filled'] = false;
+                    $survey = Survey::create($data2);
+                }
+            }
+        }
         return redirect(route('questionnairesModerator.index'))->with('status', __('questionnaires.update.success'));
     }
 
