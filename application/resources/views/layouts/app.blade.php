@@ -9,7 +9,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- CONSTANT CSS JS FILES, FONTS -->
     @include('constant/head')
-    @include('constant/dataTable')
+    @yield('additives')
 </head>
 <body>
     <div id="app" class="maindiv">
