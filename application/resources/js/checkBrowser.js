@@ -1,4 +1,4 @@
- (() => { // webpackBootstrap
+ (() => {
     var __webpack_exports__ = {};
     function isIE() {
       var ua = window.navigator.userAgent;
