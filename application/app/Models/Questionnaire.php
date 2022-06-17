@@ -23,6 +23,7 @@ class Questionnaire extends Model
         // 'questionnaire',
         'id',
         'title',
+        'description',
         'user_id',
         'startdate',
         'enddate'

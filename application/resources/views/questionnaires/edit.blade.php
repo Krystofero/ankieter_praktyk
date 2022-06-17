@@ -24,7 +24,7 @@
                         </div>
                         <div class="form-group">
                             <label for="description">Opis</label>
-                            <textarea name="description" id="description" class="form-control" type="text" aria-describedby="titleHelp" placeholder="Wprowadź opis" autocomplete="description" autofocus>{{$questionnaire->description}}</textarea>
+                            <textarea name="description" id="description" class="form-control" value="{{$questionnaire->description}}" type="text" aria-describedby="titleHelp" placeholder="Wprowadź opis" autocomplete="description" autofocus>{{$questionnaire->description}}</textarea>
                             <small id="descriptionHelp" class="form-text text-muted">Krótki opis widoczny przez respondentów.</small>
 
                             @error('description')
