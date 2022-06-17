@@ -42,6 +42,8 @@ Route::middleware(['auth', 'verified'])->group(function() { #grupa zalogowanych 
         Route::delete('/questionnairesModerator/{questionnaire}/questions/{question}', [QuestionController::class, 'destroy']);
         Route::delete('/questionnairesModerator/{questionnaire}', [ModeratorQuestionnaireController::class, 'destroy']);
 
+        Route::get('/questionnairesModerator/downloadPDF/{questionnaire}', [ModeratorQuestionnaireController::class, 'downloadPDF']);
+
         Route::resource('questionnairesModerator', ModeratorQuestionnaireController::class)->only([ //ankiety moderatora
             'index', 'store', 'edit', 'create', 'update', 'show', 'destroy'
         ]); 

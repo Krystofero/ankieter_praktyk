@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('additives')
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
    <!-- tailwindcss -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Echarts -->
@@ -15,8 +17,16 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header h4">Statystyki ankiety: {{ $questionnaire->title }}</div>
-
+                <div class="form-group row mt-2 mb-0">
+                    <div class="col-md-10">
+                        <div class="card-header h4">Statystyki ankiety: {{ $questionnaire->title }}</div>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{{url('/questionnairesModerator/downloadPDF/')}}/{{$questionnaire->id}}">
+                            <button class="btn btn-info btn-lg" title="Generowanie PDF"><i class="fas fa-file-pdf"></i>  Generowanie PDF</button>
+                        </a>
+                    </div>
+                </div>
                 <div class="card-body">
 
                     <div class="card-body">

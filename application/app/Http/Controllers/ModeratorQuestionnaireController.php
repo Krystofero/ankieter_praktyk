@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+// use PDF;
+// use Spatie\Browsershot\Browsershot;
+use VerumConsilium\Browsershot\Facades\PDF;
 use Chartisan\PHP\Chartisan;
 // use App\Charts\AnswersChart;
 use App\Models\Survey;
@@ -133,7 +136,6 @@ class ModeratorQuestionnaireController extends Controller
         foreach($questionnaire->questions as $question){
             // if($question->type == "Zamkniete" && $question->responses->count()){
                 foreach($question->answers as $answer){
-                    // dd($answer);
                     if($question->responses->count()){
                         $answers[$iter] = intval(($answer->responses->count() * 100) / $question->responses->count());
                     }
@@ -252,5 +254,51 @@ class ModeratorQuestionnaireController extends Controller
             ])->setStatusCode(500);
         }
     }
+
+    public function downloadPDF(Questionnaire  $questionnaire){
+        $questionnaire->load('questions.answers.responses');
+        $alphas = range('a', 'z'); //lista małych liter
+
+        $answers_chart = array();
+        $numberofquestions = $questionnaire->questions->count();
+        for ($i = 0; $i < $numberofquestions; $i++){
+            $answers_chart[$i] = null;
+        }
+        //inicjalizacja zmiennych:
+        $letters = array();
+        $answers = array();
+        $iter = 0;
+        $iter2 = 0;
+        foreach($questionnaire->questions as $question){
+                foreach($question->answers as $answer){
+                    if($question->responses->count()){
+                        $answers[$iter] = intval(($answer->responses->count() * 100) / $question->responses->count());
+                    }
+                    else {
+                        $answers[$iter] = 0;
+                    }
+                    $letters[$iter] = $alphas[$iter];
+                    $iter++;
+                }
+                $answers_chart[$iter2] = Chartisan::build()
+                    ->labels($letters)
+                    ->dataset('Odpowiedź', $answers)
+                    ->toJSON();
+                //czyszczenie zmiennych przed nowym obiegiem pętli
+                $letters = array();
+                $answers = array();
+
+                $iter = 0;   
+                $iter2 ++; 
+        }
+
+        return PDF::loadView('questionnaires.stats', compact('questionnaire', 'answers_chart', 'alphas'))->showBackground()
+        ->waitUntilNetworkIdle()
+        ->margins(10, 5, 10, 5)
+        ->format('A4')
+        ->download('statystyki_ankiety'.$questionnaire->id.'.pdf');
+
+        // Browsershot::url("http://localhost:3000/ankieter_praktyk/ankieter_praktyk/application/public/questionnairesModerator/stats/5")->save('statystyki_ankiety.pdf');
+      }
 }
 
