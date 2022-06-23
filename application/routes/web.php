@@ -21,6 +21,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/infocookies', function () {
+    return view('infocookies');
+});
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Route::get('/users/list', [UsersController::class, 'index'])->middleware('auth');  #->middleware('auth')  -wymagane jest wcześniejsze zalogowanie się
