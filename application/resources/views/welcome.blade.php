@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html>
 <head>
     @include('constant/head')
@@ -13,3 +13,12 @@
     @include('constant/footer')
 </body>
 </html>
+ --}}
+
+@extends('layouts.app')
+
+@section('content')
+<div id="welcome">
+    <h1><span>Witaj</span></h1>
+</div>
+@endsection
