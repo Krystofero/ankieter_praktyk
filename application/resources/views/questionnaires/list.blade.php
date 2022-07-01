@@ -47,7 +47,7 @@
                     @endif
 
                     <td class="text-center">
-                        @if(($questionnaire->filled == false) && $questionnaire->enddate >= now()) 
+                        @if(($questionnaire->filled == false) && $questionnaire->enddate >= now() && $questionnaire->startdate <= now()) 
                             <a href="{{ route('questionnaires.show', $questionnaire->questionnaire_id) }}">
                                 <button class="btn btn-success btn-sm" title="Wypełnij ankietę"><i class="far fa-edit"></i></button>
                             </a>
